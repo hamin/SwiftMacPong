@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     let pongPaddleSize:CGSize = CGSizeMake(35, 150)
     
-    init(size: CGSize){
+    override init(size: CGSize){
         
         self.fadeOutAction = SKAction.fadeOutWithDuration(0.75)
         self.fadeInAction = SKAction.fadeInWithDuration(0.75)
@@ -120,6 +120,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.initialCpuPositionX = CGFloat(CGRectGetMinX(self.frame) + pongPaddleSize.width/2) + CGFloat(LED_PONG_PADDING);
         
     }
+
+    required init(coder: NSCoder!) {
+        super.init(coder: coder)
+    }
     
 // OS X EVENT HANDLING
     func handleKeyEvent(theEvent: NSEvent, isKeyDown:Bool) {
@@ -174,9 +178,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     func pauseGame(){
         self.gamePaused = true;
     
-        if (!self.pauseLabel.text) {
+//        if (!self.pauseLabel.text) {
             self.pauseLabel.text = "Paused"
-        }
+//        }
         self.pauseLabel.runAction(self.fadeInAction)
     }
     
@@ -197,7 +201,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 
     func randomAngle() -> CGFloat{
         var uintValue = self.randomNumberFrom(25, to: 35)
-        return CGFloat(uintValue) * (M_PI / 180)
+        return CGFloat(uintValue) * CGFloat(M_PI / 180)
     }
     
     func randomNumberFrom(low:UInt32, to:UInt32) -> UInt32{
@@ -246,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         // Move CPU Paddle
         // FIXME: CPU Paddle cheats by passing bounds
-        self.cpuPaddle.position = CGPointMake(self.cpuPaddle.position.x, (Double(self.ballVelocityY) *  0.845) + speedBoost);
+        self.cpuPaddle.position = CGPointMake(self.cpuPaddle.position.x, (self.ballVelocityY *  0.845) + CGFloat(speedBoost));
         
         // Ball's next movement when it hits top or bottom
         if (self.ballVelocityY >= self.frame.size.height - self.ball.size.height/2) {
@@ -267,8 +271,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
         
         // Move Ball
-        var currentBallVelocityY = ( Double(LED_PONG_BALL_SPEED) * Double(self.ballVelocityModifier) ) + speedBoost;
-        var speedDifference = (Double(LED_PONG_BALL_SPEED) - Double(currentBallVelocityY)) + speedBoost;
+        var currentBallVelocityY = CGFloat( CGFloat(LED_PONG_BALL_SPEED) * self.ballVelocityModifier ) + CGFloat(speedBoost);
+        var speedDifference = (CGFloat(LED_PONG_BALL_SPEED) - currentBallVelocityY) + CGFloat(speedBoost);
         
         if (self.bounceUp){
             self.ballVelocityY += currentBallVelocityY;
@@ -278,9 +282,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         
         if (self.bounceLeft){
-            self.ballVelocityX -= (Double(LED_PONG_BALL_SPEED) + Double(speedDifference));
+            self.ballVelocityX -= (CGFloat(LED_PONG_BALL_SPEED) + CGFloat(speedDifference));
         }else{
-            self.ballVelocityX += (Double(LED_PONG_BALL_SPEED) + Double(speedDifference));
+            self.ballVelocityX += (CGFloat(LED_PONG_BALL_SPEED) + CGFloat(speedDifference));
         }
         
         
