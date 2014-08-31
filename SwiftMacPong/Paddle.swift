@@ -23,15 +23,19 @@ class Paddle: SKSpriteNode {
     let edgeCategory: UInt32 = 1
     let ballCategory: UInt32 = 2
     
-    init(color:SKColor, size:CGSize){
-//        super.init(color: color, size: size)
-        super.init()
+    override init() {
+        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
         self.setUp()
     }
     
-    override init(texture: SKTexture!, color: SKColor!, size: CGSize)
-    {
-        super.init(texture: texture, color: color, size:size)
+    init(texture: SKTexture!) {
+        super.init(texture: texture, color: SKColor.clearColor(), size: texture.size())
+        self.setUp()
+    }
+    
+    override init(texture: SKTexture!, color: SKColor!, size: CGSize) {
+        super.init(texture: texture, color: color, size: size)
+        self.setUp()
     }
 
     required init(coder: NSCoder!) {
