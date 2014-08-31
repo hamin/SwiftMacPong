@@ -10,20 +10,20 @@ import SpriteKit
 //import Paddle
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
-    var cpuPaddle:Paddle
-    var playerPaddle:Paddle
-    var ball:SKSpriteNode
+    var cpuPaddle:Paddle = Paddle(color: SKColor.whiteColor(), size: CGSizeMake(35, 150))
+    var playerPaddle:Paddle =  Paddle(color: SKColor.whiteColor(), size: CGSizeMake(35, 150))
+    var ball:SKSpriteNode = SKSpriteNode(imageNamed:"Ball")
     
-    var playerScoreLabel:SKLabelNode
-    var cpuScoreLabel:SKLabelNode
-    var pauseLabel:SKLabelNode
+    var playerScoreLabel:SKLabelNode = SKLabelNode(fontNamed:"Helvetica")
+    var cpuScoreLabel:SKLabelNode = SKLabelNode(fontNamed:"Helvetica")
+    var pauseLabel:SKLabelNode = SKLabelNode(fontNamed:"Helvetica")
     
-    var fadeOutAction:SKAction
-    var fadeInAction:SKAction
-    var soundEffectAction:SKAction
+    var fadeOutAction:SKAction = SKAction.fadeOutWithDuration(0.75)
+    var fadeInAction:SKAction = SKAction.fadeInWithDuration(0.75)
+    var soundEffectAction:SKAction = SKAction.playSoundFileNamed("beep.wav", waitForCompletion: false)
     
-    var gamePaused:Bool
-    var gameStarted:Bool
+    var gamePaused:Bool = false
+    var gameStarted:Bool = false
     var moveUp:Bool = false
     var moveDown:Bool = false
     var bounceUp:Bool = false
@@ -57,23 +57,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     let pongPaddleSize:CGSize = CGSizeMake(35, 150)
     
-    override init(size: CGSize){
-        
-        self.fadeOutAction = SKAction.fadeOutWithDuration(0.75)
-        self.fadeInAction = SKAction.fadeInWithDuration(0.75)
-        
-        self.playerScoreLabel = SKLabelNode(fontNamed:"Helvetica")
+    private func customInit(){
         self.playerScoreLabel.fontSize = 45
-        
-        self.cpuScoreLabel = SKLabelNode(fontNamed:"Helvetica")
         self.cpuScoreLabel.fontSize = 45
 
-        
-        self.playerPaddle = Paddle(color: SKColor.whiteColor(), size: CGSizeMake(35, 150))
-        self.cpuPaddle = Paddle(color: SKColor.whiteColor(), size: CGSizeMake(35, 150))
-        
-
-        self.ball = SKSpriteNode(imageNamed:"Ball")
         self.ball.name = "Ball"
         self.ball.color = SKColor.whiteColor()
         self.ball.physicsBody = SKPhysicsBody(circleOfRadius:26)
@@ -83,18 +70,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.ball.physicsBody.mass = 0.0
         self.ball.physicsBody.velocity = CGVectorMake(0, 0)
         
-        
-        self.pauseLabel = SKLabelNode(fontNamed:"Helvetica")
         self.pauseLabel.fontSize = 70
         self.pauseLabel.text = nil
         
-        self.gameStarted = false;
-        self.gamePaused = false;
-        
-        self.soundEffectAction = SKAction.playSoundFileNamed("beep.wav", waitForCompletion: false)
-
-        
-        super.init(size: size)
         self.backgroundColor = SKColor(red:0.15, green:0.15, blue:0.15, alpha:1)
         
         self.addChild(self.playerScoreLabel)
@@ -118,11 +96,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         self.initialPlayerPositionX = CGFloat(CGRectGetMaxX(self.frame) - pongPaddleSize.width/2) - CGFloat(LED_PONG_PADDING);
         self.initialCpuPositionX = CGFloat(CGRectGetMinX(self.frame) + pongPaddleSize.width/2) + CGFloat(LED_PONG_PADDING);
-        
+    }
+    
+    override init(size: CGSize){
+        super.init(size:size)
+        self.customInit()
     }
 
     required init(coder: NSCoder!) {
-        super.init(coder: coder)
+        super.init(coder:coder)
+        self.customInit()
     }
     
 // OS X EVENT HANDLING
