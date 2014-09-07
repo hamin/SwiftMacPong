@@ -24,7 +24,7 @@ class Paddle: SKSpriteNode {
     let ballCategory: UInt32 = 2
     
     override init() {
-        super.init(texture: texture, color: SKColor.whiteColor(), size: texture.size())
+        super.init(texture: texture, color: SKColor.whiteColor(), size: texture!.size())
         self.setUp()
     }
     
@@ -48,10 +48,10 @@ class Paddle: SKSpriteNode {
         self.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(35, 150))
 //        self.physicsBody.categoryBitMask = kLEDPaddleCategory
 //        self.physicsBody.contactTestBitMask = kLEDEdgeCategory | kLEDBallCategory
-        self.physicsBody.categoryBitMask = self.paddleCategory
-        self.physicsBody.contactTestBitMask = self.edgeCategory | self.ballCategory
-        self.physicsBody.allowsRotation = true
-        self.physicsBody.friction = 0.0
-        self.physicsBody.mass = 0.0
+        self.physicsBody?.categoryBitMask = self.paddleCategory
+        self.physicsBody?.contactTestBitMask = self.edgeCategory | self.ballCategory
+        self.physicsBody?.allowsRotation = true
+        self.physicsBody?.friction = 0.0
+        self.physicsBody?.mass = 0.0
     }
 }

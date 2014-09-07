@@ -64,14 +64,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         self.ball.name = "Ball"
         self.ball.color = SKColor.whiteColor()
         self.ball.physicsBody = SKPhysicsBody(circleOfRadius:26)
-        self.ball.physicsBody.categoryBitMask = self.ballCategory
-        self.ball.physicsBody.contactTestBitMask = self.paddleCategory
-        self.ball.physicsBody.friction = 0.0
-        self.ball.physicsBody.mass = 0.0
-        self.ball.physicsBody.velocity = CGVectorMake(0, 0)
+        self.ball.physicsBody?.categoryBitMask = self.ballCategory
+        self.ball.physicsBody?.contactTestBitMask = self.paddleCategory
+        self.ball.physicsBody?.friction = 0.0
+        self.ball.physicsBody?.mass = 0.0
+        self.ball.physicsBody?.velocity = CGVectorMake(0, 0)
         
         self.pauseLabel.fontSize = 70
-        self.pauseLabel.text = nil
+        self.pauseLabel.text = ""//nil
         
         self.backgroundColor = SKColor(red:0.15, green:0.15, blue:0.15, alpha:1)
         
