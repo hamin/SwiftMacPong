@@ -5,7 +5,7 @@ A Pong clone in Swift written with SpriteKit framework for OS X. This is essenti
 
 ### Requirements
 
-* XCode 6 beta6 or greater
+* XCode 6 beta7 or greater
 * Mac OS X 10.9
 
 ### Controls
